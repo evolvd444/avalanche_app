@@ -1,9 +1,12 @@
-import { FlatList, StyleSheet, Text, TouchableOpacity, View, Image,  } from 'react-native'
+import { FlatList, StyleSheet, Text, TouchableOpacity, View, Image  } from 'react-native'
 import React from 'react'
 import tw from 'tailwind-react-native-classnames'
 import ImageResizeMode from 'react-native/Libraries/Image/ImageResizeMode'
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
+import { selectOrigin } from '../slices/navSlice';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 const data =[
     {
         id: "123",
@@ -18,8 +21,14 @@ const data =[
         screen: "CompaniesScreen", //all of this info will change
     }
 ]
+
 const NavOptions = () => {
     const navigation = useNavigation();
+    const origin = useSelector(selectOrigin);
+   
+    useEffect(() => {
+        if(origin === null) return;
+    },[origin])
 
   return (
    <FlatList
@@ -28,9 +37,13 @@ const NavOptions = () => {
    horizontal
    renderItem = {({item}) => (
     <TouchableOpacity 
-    onPress={()=> navigation.navigate(item.screen)} 
-    style={tw`p-2 pl-6 pb-6 pt-4 bg-gray-200 m-2 w-40`}>
-    <View styles = {styles.container}>
+    onPress={()=> 
+        
+        navigation.navigate(item.screen)} 
+    style={tw`p-2 pl-6 pb-6 pt-4 bg-gray-200 m-2 w-40`}
+    disabled={!origin}
+    >
+    <View style = {tw`${!origin && "opacity-20"}`}>
         <Image
         styles = {styles.image}
         source={item.image} 
@@ -39,6 +52,7 @@ const NavOptions = () => {
         <Icon style={tw`p-2 bg-black rounded-full w-10 mt-4` }name= 'arrowright' color= "white" type= "antdesign"/>
     </View>
     </TouchableOpacity>
+   
    )}/>
   )
 }
@@ -46,11 +60,5 @@ const NavOptions = () => {
 export default NavOptions
 
 const styles = StyleSheet.create({
-    container: {
-        height:5
-    },
-    image: {
-        width: 120,
-        height: 120,
-    }
+   
 })

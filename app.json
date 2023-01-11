@@ -18,6 +18,10 @@
       "**/*"
     ],
     "ios": {
+      "infoPList": {
+        "NSLocationWhenInUseUsageDescription": "When you want to choose their current location when selecting 'Where From?' field in the app",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "If you enjoy the convenience of the app finding your location for you! If you are a driver, then it can live update your routes!"
+      },
       "supportsTablet": true
     },
     "android": {
@@ -25,6 +29,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       }
+      
     },
     "web": {
       "favicon": "./assets/favicon.png"
